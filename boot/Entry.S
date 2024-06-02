@@ -1,12 +1,26 @@
-.text ;
+.text
     .code 32
 
     .global vector_start
     .global vector_end
 
     vector_start:
-        MOV    R0, R1
+        LDR PC, reset_handler_addr
+        LDR PC, svc_handler_addr
+        B .
+        LDR PC, irq_handler_addr
+        
+        reset_handler_addr: .word reset_handler
+        svc_handler_addr: .word dummy_handler
+        irq_handler_addr: .word dummy_handler
+        
     vector_end:
-        .space 1024, 0
-.end ;
-; ./Entry.S: Warning: end of file not at end of a line; newline inserted
+
+    reset_handler:
+        LDR R0, =0x10000000
+        LDR R1, [R0]
+
+    dummy_handler:
+        B .
+    
+.end
