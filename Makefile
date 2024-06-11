@@ -14,14 +14,16 @@ LINKER_SCRIPT = ./hanios.ld
 ASM_SRCS = $(wildcard ./boot/*.S)
 ASM_OBJS = $(patsubst ./boot/%.S, ./build/%.o, $(ASM_SRCS))
 
+INC_DIRS = ./include
+
 hanios = ./build/hanios.axf
 hanios_bin = ./build/hanios.bin
 
-.PHONY: all clean run debug gdb
+.PHONY: all clear run debug gdb
 
 all: $(hanios)
 
-clean:
+clear:
 	@rm -fr ./build
 	
 run: $(hanios)
@@ -31,12 +33,12 @@ debug: $(hanios)
 	qemu-system-arm -M realview-pb-a8 -kernel $(hanios) -nographic -S -gdb tcp::1234,ipv4
 	
 gdb:
-	arm-none-eabi-gdb
+	arm-none-eabi-gdb ./build/hanios.axf
 
 $(hanios): $(ASM_OBJS) $(LINKER_SCRIPT)
 	$(LD) -n -T $(LINKER_SCRIPT) -o $(hanios) $(ASM_OBJS)
 	$(OC) -O binary $(hanios) $(hanios_bin)
 
-build/%.o: boot/%.S
+./build/%.o: ./boot/%.S
 	mkdir -p $(shell dirname $@)
-	$(AS) -march=$(ARCH) -mcpu=$(MCPU) -g -o $@ $<
+	$(CC) -march=$(ARCH) -marm -I $(INC_DIRS) -c -g -o $@ $<
