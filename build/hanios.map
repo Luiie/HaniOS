@@ -1,0 +1,96 @@
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+                0x0000000000000000                . = 0x0
+
+.text           0x0000000000000000       0x9c
+ *(vector_start)
+ *(.text .rodata)
+ .text          0x0000000000000000       0x30 ./build/main.o
+                0x0000000000000000                main
+ .text          0x0000000000000030       0x6c ./build/Entry.os
+                0x0000000000000030                vector_start
+                0x000000000000004c                vector_end
+
+.glue_7         0x000000000000009c        0x0
+ .glue_7        0x000000000000009c        0x0 linker stubs
+
+.glue_7t        0x000000000000009c        0x0
+ .glue_7t       0x000000000000009c        0x0 linker stubs
+
+.vfp11_veneer   0x000000000000009c        0x0
+ .vfp11_veneer  0x000000000000009c        0x0 linker stubs
+
+.v4_bx          0x000000000000009c        0x0
+ .v4_bx         0x000000000000009c        0x0 linker stubs
+
+.iplt           0x000000000000009c        0x0
+ .iplt          0x000000000000009c        0x0 ./build/main.o
+
+.rel.dyn        0x000000000000009c        0x0
+ .rel.iplt      0x000000000000009c        0x0 ./build/main.o
+
+.data           0x000000000000009c        0x0
+ *(.data)
+ .data          0x000000000000009c        0x0 ./build/main.o
+ .data          0x000000000000009c        0x0 ./build/Entry.os
+
+.igot.plt       0x000000000000009c        0x0
+ .igot.plt      0x000000000000009c        0x0 ./build/main.o
+
+.bss            0x000000000000009c        0x0
+ *(.bss)
+ .bss           0x000000000000009c        0x0 ./build/main.o
+ .bss           0x000000000000009c        0x0 ./build/Entry.os
+LOAD ./build/main.o
+LOAD ./build/Entry.os
+OUTPUT(./build/hanios.axf elf32-littlearm)
+LOAD linker stubs
+
+.debug_info     0x0000000000000000       0xd5
+ .debug_info    0x0000000000000000       0xb1 ./build/main.o
+ .debug_info    0x00000000000000b1       0x24 ./build/Entry.os
+
+.debug_abbrev   0x0000000000000000       0x82
+ .debug_abbrev  0x0000000000000000       0x6e ./build/main.o
+ .debug_abbrev  0x000000000000006e       0x14 ./build/Entry.os
+
+.debug_aranges  0x0000000000000000       0x40
+ .debug_aranges
+                0x0000000000000000       0x20 ./build/main.o
+ .debug_aranges
+                0x0000000000000020       0x20 ./build/Entry.os
+
+.debug_line     0x0000000000000000      0x1af
+ .debug_line    0x0000000000000000      0x14b ./build/main.o
+ .debug_line    0x000000000000014b       0x64 ./build/Entry.os
+
+.debug_str      0x0000000000000000       0xee
+ .debug_str     0x0000000000000000       0xd3 ./build/main.o
+                                        0x110 (size before relaxing)
+ .debug_str     0x00000000000000d3       0x1b ./build/Entry.os
+                                         0x37 (size before relaxing)
+
+.comment        0x0000000000000000       0x44
+ .comment       0x0000000000000000       0x44 ./build/main.o
+                                         0x45 (size before relaxing)
+
+.ARM.attributes
+                0x0000000000000000       0x2d
+ .ARM.attributes
+                0x0000000000000000       0x2f ./build/main.o
+ .ARM.attributes
+                0x000000000000002f       0x1d ./build/Entry.os
+
+.debug_frame    0x0000000000000000       0x30
+ .debug_frame   0x0000000000000000       0x30 ./build/main.o
+
+.debug_line_str
+                0x0000000000000000       0x29
+ .debug_line_str
+                0x0000000000000000       0x29 ./build/Entry.os
