@@ -4,7 +4,7 @@
 
 //connect HW register struct to base address
     //PL011_t, UART of RealViewPB platform
-exturn volatile PL011_t* Uart;
+extern volatile PL011_t* Uart;
 
 void HAL_UART_init(void){
     Uart->uartcr.bits.UARTEN = 0;

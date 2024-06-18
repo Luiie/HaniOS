@@ -1,6 +1,8 @@
 ARCH = armv7-a
 MCPU = cortex-a8
 
+TARGET = RealViewPB
+
 CC = arm-none-eabi-gcc
 AS = arm-none-eabi-as
 LD = arm-none-eabi-ld
@@ -15,10 +17,18 @@ MAP_FILE = ./build/hanios.map
 ASM_SRCS = $(wildcard ./boot/*.S)
 ASM_OBJS = $(patsubst ./boot/%.S, ./build/%.os, $(ASM_SRCS))
 
-C_SRCS = $(wildcard ./boot/*.c)
-C_OBJS = $(patsubst ./boot/%.c, ./build/%.o, $(C_SRCS))
+VPATH = ./boot\
+		./HAL/$(TARGET)
 
-INC_DIRS = -I ./include
+C_SRCS = $(wildcard ./boot/*.c)
+C_SRCS += $(wildcard ./HAL/$(TARGET)/*.c)
+C_OBJS = $(patsubst ./%.c, ./build/%.o, $(C_SRCS))
+
+INC_DIRS = -I ./include\
+		   -I ./HAL\
+		   -I ./HAL/$(TARGET)
+
+CFLAGS = -c -g -std=c11
 
 hanios = ./build/hanios.axf
 hanios_bin = ./build/hanios.bin
@@ -43,10 +53,10 @@ $(hanios): $(ASM_OBJS) $(C_OBJS) $(LINKER_SCRIPT)
 	$(LD) -n -T $(LINKER_SCRIPT) -o $(hanios) $(C_OBJS) $(ASM_OBJS) -Map=$(MAP_FILE)
 	$(OC) -O binary $(hanios) $(hanios_bin)
 
-./build/%.os: ./boot/%.S
-	mkdir -p $(dir $@)
-	$(CC) -march=$(ARCH) -marm $(INC_DIRS) -c -g -o $@ $<
+./build/%.os: ./%.S
+	mkdir -p $(shell dirname $@)
+	$(CC) -march=$(ARCH) -marm $(INC_DIRS) $(CFLAGS) -o $@ $<
 
-./build/%.o: ./boot/%.c
-	mkdir -p $(dir $@)
-	$(CC) -march=$(ARCH) -marm $(INC_DIRS) -c -g -o $@ $<
+./build/%.o: ./%.c
+	mkdir -p $(shell dirname $@)
+	$(CC) -march=$(ARCH) -marm $(INC_DIRS) $(CFLAGS) -o $@ $<
