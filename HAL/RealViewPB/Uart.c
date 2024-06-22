@@ -24,12 +24,12 @@ uint8_t HAL_UART_get_char(void){
     while(Uart->uartfr.bits.RXFE);
 
     // Check for Error flages
-    if(Uart->uartdr.all & 0xFFFFFF00){
+    data = Uart->uartdr.all;
+    if(data & 0xFFFFFF00){
         // Clear Error flages
         Uart->uartdr.all = 0xFF;
         return 0;
     }
-
-    data = Uart->uartdr.bits.DATA;
-    return data;
+    
+    return (uint8_t) (data & 0xFF);
 };
