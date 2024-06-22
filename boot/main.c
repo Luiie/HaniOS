@@ -12,13 +12,16 @@ void main(void)
 
     // UART init
     HW_init();
-    uint32_t i = 10;
-    while(i--){
-        HAL_UART_put_char('A');
-    };
 
     // printString from standardIO
     uint32_t result = printingString("Hello, world!");
+
+    // HAL_UART_put_char & HAL_UART_get_char
+    uint32_t i = 10;
+    while(i--){
+        uint32_t ch = HAL_UART_get_char();
+        HAL_UART_put_char(ch);
+    };
 }
 
 static void HW_init(void){
