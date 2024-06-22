@@ -18,21 +18,18 @@ void HAL_UART_put_char(uint8_t ch){
     Uart->uartdr.all = (ch & 0xFF);
 };
 
-uint8_t HAL_UART_get_char(void);{
+uint8_t HAL_UART_get_char(void){
     uint8_t data;
 
     while(Uart->uartfr.bits.RXFE);
 
     // Check for Error flages
-    if(Uart->uartdr.bits.BE || Uart->uartdr.bits.FE || Uart->uartdr.bits.OE || Uart->uartdr.bits.PE){
+    if(Uart->uartdr.all & 0xFFFFFF00){
         // Clear Error flages
-        Uart->uartdr.bits.BE = 1;
-        Uart->uartdr.bits.FE = 1;
-        Uart->uartdr.bits.OE = 1;
-        Uart->uartdr.bits.PE = 1;
+        Uart->uartdr.all = 0xFF;
         return 0;
     }
 
     data = Uart->uartdr.bits.DATA;
     return data;
-}
+};
