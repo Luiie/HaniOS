@@ -16,12 +16,8 @@ void main(void)
     // printString from standardIO
     uint32_t result = printingString("Hello, world!");
 
-    // HAL_UART_put_char & HAL_UART_get_char
-    uint32_t i = 10;
-    while(i--){
-        uint32_t ch = HAL_UART_get_char();
-        HAL_UART_put_char(ch);
-    };
+    // gettingString  from standardIO
+    uint32_t result2 = gettingString();
 }
 
 static void HW_init(void){
