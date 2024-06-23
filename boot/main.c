@@ -3,6 +3,7 @@
 #include "standardIO.h"
 
 static void HW_init(void);
+static void PrintTest(void);
 
 void main(void)
 {
@@ -16,10 +17,28 @@ void main(void)
     // printString from standardIO
     uint32_t result = printingString("Hello, world!");
 
-    // gettingString  from standardIO
+    // gettingString from standardIO
     uint32_t result2 = gettingString();
+
+    // printingFormat from standardIO
+    PrintTest();
 }
 
 static void HW_init(void){
     HAL_UART_init();
+};
+
+static void PrintTest(void){
+    char* test_str = "printingFormat pointer test";
+    char* test_nullptr = 0;
+    uint32_t test_i = 5;
+
+    printingFormat("%s", "Hello printingFormat");
+    printingFormat("string pointer: %s", test_str);
+    printingFormat("null pointer: %s", test_nullptr);
+    printingFormat("%c", 'A');
+    printingFormat("%d", test_i);
+    printingFormat("%h", test_i);
+    printingFormat("%b", test_i);
+    printingFormat("zero: %d", 0);
 };

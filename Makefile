@@ -5,7 +5,7 @@ TARGET = RealViewPB
 
 CC = arm-none-eabi-gcc
 AS = arm-none-eabi-as
-LD = arm-none-eabi-ld
+LD = arm-none-eabi-gcc
 OC = arm-none-eabi-objcopy
 OD = arm-none-eabi-objdump
 
@@ -32,6 +32,7 @@ INC_DIRS = -I ./include\
 		   -I ./lib
 
 CFLAGS = -c -g -std=c11
+LDFLAGS = -nostartfiles -nostdlib -nodefaultlibs -static -lgcc
 
 hanios = ./build/hanios.axf
 hanios_bin = ./build/hanios.bin
@@ -53,7 +54,7 @@ gdb:
 	arm-none-eabi-gdb ./build/hanios.axf
 
 $(hanios): $(ASM_OBJS) $(C_OBJS) $(LINKER_SCRIPT)
-	$(LD) -n -T $(LINKER_SCRIPT) -o $(hanios) $(C_OBJS) $(ASM_OBJS) -Map=$(MAP_FILE)
+	$(LD) -n -T $(LINKER_SCRIPT) -o $(hanios) $(C_OBJS) $(ASM_OBJS) -Wl,-Map=$(MAP_FILE) $(LDFLAGS)
 	$(OC) -O binary $(hanios) $(hanios_bin)
 
 ./build/%.os: ./%.S
