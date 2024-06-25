@@ -20,7 +20,7 @@
  */
 
 #ifndef _STDINT_H
-#define _STDINT_H	1
+#define _STDINT_H
 
 /* Exact integral types.  */
 
