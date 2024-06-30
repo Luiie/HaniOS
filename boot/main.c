@@ -41,4 +41,6 @@ static void PrintTest(void){
     printingFormat("%h", test_i);
     printingFormat("%b", test_i);
     printingFormat("zero: %d", 0);
+
+    while(ture);
 };
