@@ -15,7 +15,7 @@
         
         reset_handler_addr: .word reset_handler
         svc_handler_addr: .word dummy_handler
-        irq_handler_addr: .word dummy_handler
+        irq_handler_addr: .word IRQHandler
         
     vector_end:
 
