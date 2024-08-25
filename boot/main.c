@@ -19,13 +19,14 @@ void main(void)
     uint32_t result = printingString("Hello, world!");
 
     // gettingString from standardIO
-    uint32_t result2 = gettingString();
+    // uint32_t result2 = gettingString();
 
     // printingFormat from standardIO
     PrintTest();
+    printingString("\n");
 
     // while loop
-    while(TRUE)
+    while(TRUE);
 }
 
 static void HW_init(void){

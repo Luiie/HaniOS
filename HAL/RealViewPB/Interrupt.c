@@ -44,11 +44,11 @@ void HAL_INTERRUPT_disable(uint32_t interrupt_num){
     uint32_t bit_num = interrupt_num - GIC_IRQ_START;
 
     if(bit_num < GIC_IRQ_START){
-        CLEER_BIT(GicDist->setenable1, bit_num);
+        CLEAR_BIT(GicDist->setenable1, bit_num);
     }
     else{
         bit_num -= GIC_IRQ_START;
-        CLEER_BIT(GicDist->setenable2, bit_num);
+        CLEAR_BIT(GicDist->setenable2, bit_num);
     }
 }
 
@@ -58,7 +58,7 @@ void HAL_INTERRUPT_register_handler(InterruptHandler_fptr handler, uint32_t inte
 
 void HAL_INTERRUPT_run_handler(void){
     uint32_t interrupt_num = GicCpu->interruptack.bits.InterruptID;
-
+    
     if(InterruptHandlers[interrupt_num] != NULL){
         InterruptHandlers[interrupt_num]();
     }

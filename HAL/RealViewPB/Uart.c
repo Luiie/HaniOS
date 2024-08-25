@@ -16,6 +16,9 @@ void HAL_UART_init(void){
     Uart->uartcr.bits.RXE = 1;
     Uart->uartcr.bits.UARTEN = 1;
 
+    //Enable Input Interrupt
+    Uart->uartimsc.bits.RXIM = 1;
+    
     // Register UART Interrupt Handler
         //[HAL\RealViewPB\Uart.h] #define UART_INTERRUPT0 44
     HAL_INTERRUPT_enable(UART_INTERRUPT0);
