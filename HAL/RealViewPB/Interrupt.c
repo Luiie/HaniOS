@@ -17,6 +17,7 @@ void HAL_INTERRUPT_init(void){
     for (uint32_t i = 0 ; i < INTERRUPT_HANDLER_NUM ; i++){
         InterruptHandlers[i] = NULL;
     }
+    
     Enable_IRQ();
 }
 

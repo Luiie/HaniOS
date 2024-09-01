@@ -27,6 +27,7 @@ void main(void)
 
     // while loop
     while(TRUE);
+    printingString("Hello, world!");
 }
 
 static void HW_init(void){
