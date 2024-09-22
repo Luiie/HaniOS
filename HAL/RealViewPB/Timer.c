@@ -5,6 +5,10 @@
 
 extern volatile Timer_t* Timer;
 
+static void InterruptHandlerTimer(void);
+
+static uint32_t Internal_1msCounter;
+
 void HAL_TIMER_init(void)
 {
     // inerface reset
@@ -28,4 +32,22 @@ void HAL_TIMER_init(void)
 
     Timer->timerxload = interval_1ms;
     Timer->timerxcontrol.bits.TimerEn = 1;
+
+    Internal_1msCounter = 0;
+
+    // Register Timer interrupt handler, TIMER_INTERRUPT=36
+    HAL_INTERRUPT_enable(TIMER_INTERRUPT);
+    HAL_INTERRUPT_register_handler(InterruptHandlerTimer, TIMER_INTERRUPT);
+
+}
+
+uint32_t HAL_TIMER_get1msCounter(void)
+{
+    return Internal_1msCounter;
+}
+
+static void InterruptHandlerTimer(void)
+{
+    Internal_1msCounter++;
+    Timer->timerxintclr = 1;
 }

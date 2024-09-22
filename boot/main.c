@@ -2,9 +2,12 @@
 #include "HAL_Uart.h"
 #include "standardIO.h"
 #include "HAL_Interrupt.h"
+#include "stdlib.h"
+#include "HAL_Timer.h"
 
 static void HW_init(void);
 static void PrintTest(void);
+static void TimerTest(void);
 
 void main(void)
 {
@@ -24,6 +27,9 @@ void main(void)
 
     // printingFormat from standardIO
     PrintTest();
+
+    //Timer Test
+    TimerTest();
 
     // while loop
     while(TRUE);
@@ -48,6 +54,13 @@ static void PrintTest(void){
     printingFormat("%h", test_i);
     printingFormat("%b", test_i);
     printingFormat("zero: %d", 0);
-    printingFormat("sysCtrl0: %h", *sysCtrl0);
+    // printingFormat("sysCtrl0: %h", *sysCtrl0);
     printingString("\n");
+};
+
+static void TimerTest(void){
+    while(TRUE){
+        printingFormat("current count: %d\n", HAL_TIMER_get1msCounter());
+        delay(1000);
+    }
 };
