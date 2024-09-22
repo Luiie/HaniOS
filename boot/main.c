@@ -17,17 +17,16 @@ void main(void)
 
     // printString from standardIO
     uint32_t result = printingString("Hello, world!");
+    uint32_t result1 = printingString("test");
 
     // gettingString from standardIO
     // uint32_t result2 = gettingString();
 
     // printingFormat from standardIO
     PrintTest();
-    printingString("\n");
 
     // while loop
     while(TRUE);
-    printingString("Hello, world!");
 }
 
 static void HW_init(void){
@@ -48,4 +47,5 @@ static void PrintTest(void){
     printingFormat("%h", test_i);
     printingFormat("%b", test_i);
     printingFormat("zero: %d", 0);
+    printingString("\n");
 };

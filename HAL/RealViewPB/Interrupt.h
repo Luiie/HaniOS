@@ -125,7 +125,7 @@ typedef struct GicDist_t
 #define GIC_CPU_BASE  0x1E000000  //CPU interface
 #define GIC_DIST_BASE 0x1E001000  //distributor
 
-#define GIC_PRIORITY_MASK_NONE  0xF
+#define GIC_PRIORITY_MASK_NONE  0x0F
 
 #define GIC_IRQ_START           32
 #define GIC_IRQ_END             95
