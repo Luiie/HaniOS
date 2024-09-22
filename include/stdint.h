@@ -304,5 +304,7 @@ typedef unsigned long long int	uintmax_t;
 # endif
 
 #define NULL    ((void*)0)
+#define TRUE    (1)
+#define FALSE   (0)
 
 #endif /* stdint.h */
