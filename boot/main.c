@@ -45,7 +45,7 @@ static void PrintTest(void){
     char* test_str = "printingFormat pointer test";
     char* test_nullptr = 0;
     uint32_t test_i = 5;
-    uint32_t* sysCtrl0 = (uint32_t*)0x10001000;
+    uint32_t* timerSysCtrl0 = (uint32_t*)0x10001000;
 
     printingFormat("%s", "Hello printingFormat");
     printingFormat("string pointer: %s", test_str);
@@ -55,7 +55,7 @@ static void PrintTest(void){
     printingFormat("%h", test_i);
     printingFormat("%b", test_i);
     printingFormat("zero: %d", 0);
-    // printingFormat("sysCtrl0: %h", *sysCtrl0);
+    printingFormat("sysCtrl0: %h", *timerSysCtrl0);
     printingString("\n");
 };
 
