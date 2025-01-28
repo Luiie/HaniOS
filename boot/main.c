@@ -38,7 +38,7 @@ void main(void)
 static void HwInit(void){
     HAL_InterruptInit();
     HAL_UartInit();
-    // HAL_TimerInit();
+    HAL_TimerInit();
 };
 
 static void PrintTest(void){
