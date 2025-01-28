@@ -5,7 +5,7 @@
 #include "standardLib.h"
 #include "HAL_Timer.h"
 
-static void HW_init(void);
+static void HwInit(void);
 static void PrintTest(void);
 static void TimerTest(void);
 
@@ -16,7 +16,7 @@ void main(void)
     *dummyAddr = sizeof(long);
 
     // UART init
-    HW_init();
+    HwInit();
 
     // printString from standardIO
     uint32_t result = printingString("Hello, world!");
@@ -35,9 +35,10 @@ void main(void)
     while(TRUE);
 }
 
-static void HW_init(void){
-    HAL_INTERRUPT_init();
-    HAL_UART_init();
+static void HwInit(void){
+    HAL_InterruptInit();
+    HAL_UartInit();
+    // HAL_TimerInit();
 };
 
 static void PrintTest(void){
@@ -60,7 +61,7 @@ static void PrintTest(void){
 
 static void TimerTest(void){
     while(TRUE){
-        printingFormat("current count: %d\n", HAL_TIMER_get1msCounter());
+        printingFormat("current count: %d\n", HAL_TimerGet1msCounter());
         delay(1000);
     };
 };

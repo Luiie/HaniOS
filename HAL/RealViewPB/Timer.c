@@ -5,20 +5,26 @@
 
 extern volatile Timer_t* Timer;
 
-static void InterruptHandlerTimer(void);
+static void TimerInterruptHandler(void);
 
 static uint32_t Internal_1msCounter;
 
-void HAL_TIMER_init(void)
+void HAL_TimerInit(void)
 {
-    // inerface reset
+    // disable counter
     Timer->timerxcontrol.bits.TimerEn = 0;
+    // free-running mode
     Timer->timerxcontrol.bits.TimerMode = 0;
     Timer->timerxcontrol.bits.OneShot = 0;
+    // 16-bit counter mode
     Timer->timerxcontrol.bits.TimerSize = 0;
+    // set prescaler to 1
     Timer->timerxcontrol.bits.TimerPre = 0;
+    //interrupts are cleared but enabled
     Timer->timerxcontrol.bits.IntEnable = 1;
+    // set Load Register to 0
     Timer->timerxload = 0;
+    // set counter Value to max
     Timer->timerxvalue = 0xFFFFFFFF;
 
     // set periodic mode
@@ -36,17 +42,17 @@ void HAL_TIMER_init(void)
     Internal_1msCounter = 0;
 
     // Register Timer interrupt handler, TIMER_INTERRUPT=36
-    HAL_INTERRUPT_enable(TIMER_INTERRUPT);
-    HAL_INTERRUPT_register_handler(InterruptHandlerTimer, TIMER_INTERRUPT);
+    HAL_InterruptEnable(TIMER_INTERRUPT);
+    HAL_InterruptRegisterHandler(TimerInterruptHandler, TIMER_INTERRUPT);
 
 }
 
-uint32_t HAL_TIMER_get1msCounter(void)
+uint32_t HAL_TimerGet1msCounter(void)
 {
     return Internal_1msCounter;
 }
 
-static void InterruptHandlerTimer(void)
+static void TimerInterruptHandler(void)
 {
     Internal_1msCounter++;
     Timer->timerxintclr = 1;

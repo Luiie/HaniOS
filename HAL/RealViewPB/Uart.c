@@ -9,7 +9,7 @@ extern volatile PL011_t* Uart;
 
 static void InterruptHandler(void);
 
-void HAL_UART_init(void){
+void HAL_UartInit(void){
     // Enable UART
     Uart->uartcr.bits.UARTEN = 0;
     Uart->uartcr.bits.TXE = 1;
@@ -21,16 +21,16 @@ void HAL_UART_init(void){
     
     // Register UART Interrupt Handler
         //[HAL\RealViewPB\Uart.h] #define UART_INTERRUPT0 44
-    HAL_INTERRUPT_enable(UART_INTERRUPT0);
-    HAL_INTERRUPT_register_handler(InterruptHandler, UART_INTERRUPT0);
+    HAL_InterruptEnable(UART_INTERRUPT0);
+    HAL_InterruptRegisterHandler(InterruptHandler, UART_INTERRUPT0);
 };
 
-void HAL_UART_put_char(uint8_t ch){
+void HAL_UartPutChar(uint8_t ch){
     while(Uart->uartfr.bits.TXFF);
     Uart->uartdr.all = (ch & 0xFF);
 };
 
-uint8_t HAL_UART_get_char(void){
+uint8_t HAL_UartGetChar(void){
     uint32_t data;
 
     while(Uart->uartfr.bits.RXFE);
@@ -48,6 +48,6 @@ uint8_t HAL_UART_get_char(void){
 };
 
 static void InterruptHandler(void){
-    uint8_t ch = HAL_UART_get_char();
-    HAL_UART_put_char(ch);
+    uint8_t ch = HAL_UartGetChar();
+    HAL_UartPutChar(ch);
 };

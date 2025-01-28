@@ -11,10 +11,10 @@ uint32_t printingString(const char* s){
     uint32_t counter = 0;
 
     // at first, change a line
-    HAL_UART_put_char('\n');
+    HAL_UartPutChar('\n');
 
     while(*s){
-        HAL_UART_put_char(*s++);
+        HAL_UartPutChar(*s++);
         counter++;
     };
 
@@ -24,17 +24,17 @@ uint32_t printingString(const char* s){
 uint32_t gettingString(void){
     uint32_t counter = 0;
 
-    // HAL_UART_put_char & HAL_UART_get_char
+    // HAL_UartPutChar & HAL_UartGetChar
     uint32_t ch;
-    HAL_UART_put_char('\n');
+    HAL_UartPutChar('\n');
     while(1){
-        ch = HAL_UART_get_char();
+        ch = HAL_UartGetChar();
         // End when the ESC key is enterd
         if(ch == ESC){
-            HAL_UART_put_char('\n');
+            HAL_UartPutChar('\n');
             break;
         };
-        HAL_UART_put_char(ch);
+        HAL_UartPutChar(ch);
         counter++;
     };
 

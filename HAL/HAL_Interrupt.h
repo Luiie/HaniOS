@@ -5,10 +5,10 @@
 
 typedef void (*InterruptHandler_fptr)(void);
 
-void HAL_INTERRUPT_init(void);
-void HAL_INTERRUPT_enable(uint32_t interrupt_num);
-void HAL_INTERRUPT_disable(uint32_t interrupt_num);
-void HAL_INTERRUPT_register_handler(InterruptHandler_fptr handler, uint32_t interrupt_num);
-void HAL_INTERRUPT_run_handler(void);
+void HAL_InterruptInit(void);
+void HAL_InterruptEnable(uint32_t interrupt_num);
+void HAL_InterruptDisable(uint32_t interrupt_num);
+void HAL_InterruptRegisterHandler(InterruptHandler_fptr handler, uint32_t interrupt_num);
+void HAL_InterruptRunHandler(void);
 
 #endif /* HAL_INTERRUPT_H_ */
