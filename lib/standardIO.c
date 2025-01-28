@@ -44,8 +44,8 @@ uint32_t gettingString(void){
 uint32_t printingFormat(const char* format, ...){
     va_list args;
     va_start(args, format);
-    va_end(args);
     printFormatString(printingFormat_buffer, format, args);
+    va_end(args);
 
     return printingString(printingFormat_buffer);
 }

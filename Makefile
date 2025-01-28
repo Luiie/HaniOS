@@ -54,13 +54,13 @@ gdb:
 	arm-none-eabi-gdb ./build/hanios.axf
 
 $(hanios): $(ASM_OBJS) $(C_OBJS) $(LINKER_SCRIPT)
-	$(LD) -n -T $(LINKER_SCRIPT) -o $(hanios) $(C_OBJS) $(ASM_OBJS) -Wl,-Map=$(MAP_FILE) $(LDFLAGS)
+	$(LD) -n -T $(LINKER_SCRIPT) -o $(hanios) $(ASM_OBJS) $(C_OBJS) -Wl,-Map=$(MAP_FILE) $(LDFLAGS)
 	$(OC) -O binary $(hanios) $(hanios_bin)
 
 ./build/%.os: ./%.S
 	mkdir -p $(shell dirname $@)
-	$(CC) -march=$(ARCH) -marm $(INC_DIRS) $(CFLAGS) -o $@ $<
+	$(CC) -march=$(ARCH) -mcpu=$(MCPU) -marm $(INC_DIRS) $(CFLAGS) -o $@ $<
 
 ./build/%.o: ./%.c
 	mkdir -p $(shell dirname $@)
-	$(CC) -march=$(ARCH) -marm $(INC_DIRS) $(CFLAGS) -o $@ $<
+	$(CC) -march=$(ARCH) -mcpu=$(MCPU) -marm $(INC_DIRS) $(CFLAGS) -o $@ $<

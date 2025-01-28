@@ -2,7 +2,7 @@
 #include "HAL_Uart.h"
 #include "standardIO.h"
 #include "HAL_Interrupt.h"
-#include "stdlib.h"
+#include "standardLib.h"
 #include "HAL_Timer.h"
 
 static void HW_init(void);
@@ -62,5 +62,5 @@ static void TimerTest(void){
     while(TRUE){
         printingFormat("current count: %d\n", HAL_TIMER_get1msCounter());
         delay(1000);
-    }
+    };
 };

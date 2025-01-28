@@ -31,15 +31,16 @@ void HAL_UART_put_char(uint8_t ch){
 };
 
 uint8_t HAL_UART_get_char(void){
-    uint8_t data;
+    uint32_t data;
 
     while(Uart->uartfr.bits.RXFE);
+    
+    data = Uart->uartdr.all;
 
     // Check for Error flages
-    data = Uart->uartdr.all;
     if(data & 0xFFFFFF00){
         // Clear Error flages
-        Uart->uartdr.all = 0xFF;
+        Uart->uartrsr.all = 0xFF;
         return 0;
     }
     
