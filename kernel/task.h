@@ -17,6 +17,7 @@ typedef struct KernelTcb_t
 {
     uint32_t stackPointer;
     uint8_t* stackBase;
+    uint8_t priority;
 } KernelTcb_t;
 
 typedef void (*KernelTaskFunc_t)(void);
