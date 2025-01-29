@@ -19,16 +19,19 @@ ASM_OBJS = $(patsubst ./boot/%.S, ./build/%.os, $(ASM_SRCS))
 
 VPATH = ./boot\
 		./HAL/$(TARGET)\
+		./kernel\
 		./lib
 
 C_SRCS = $(wildcard ./boot/*.c)
 C_SRCS += $(wildcard ./HAL/$(TARGET)/*.c)
 C_SRCS += $(wildcard ./lib/*.c)
+C_SRCS += $(wildcard ./kernel/*.c)
 C_OBJS = $(patsubst ./%.c, ./build/%.o, $(C_SRCS))
 
 INC_DIRS = -I ./include\
 		   -I ./HAL\
 		   -I ./HAL/$(TARGET)\
+		   -I ./kernel\
 		   -I ./lib
 
 CFLAGS = -c -g -std=c11

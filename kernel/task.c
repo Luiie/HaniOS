@@ -9,6 +9,9 @@ static uint32_t currentTCBIndex;
 static KernelTcb_t* Scheduler_RoundRobinAlgorithm(void);
 static KernelTcb_t* Scheduler_PriorityAlgorithm(void);
 
+KernelTcb_t* currentTCB;
+KernelTcb_t* nextTCB;
+
 void Kernel_TaskInit(void){
     allocatedTCBIndex = 0;
 
@@ -32,11 +35,19 @@ uint32_t Kernel_TaskCreate(KernelTaskFunc_t startFunction, uint8_t priority){
 
     newTCB->priority = priority;
 
-    KernelTaskContext_t *context = (KernelTaskContext_t *) newTCB.stackPointer;
+    KernelTaskContext_t *context = (KernelTaskContext_t *) newTCB->stackPointer;
     context->pc = (uint32_t)startFunction;
 
     return allocatedTCBIndex - 1;
 };
+
+void Kernel_TaskScheduler(void){
+    currentTCB = &TaskList[currentTCBIndex];
+    nextTCB = Scheduler_RoundRobinAlgorithm();
+
+    ContextSwitching();
+};
+
 
 static KernelTcb_t* Scheduler_RoundRobinAlgorithm(void){
     currentTCBIndex++;
@@ -46,12 +57,11 @@ static KernelTcb_t* Scheduler_RoundRobinAlgorithm(void){
 };
 
 static KernelTcb_t* Scheduler_PriorityAlgorithm(void){
-    KernelTcb_t * currentTCB = &TaskList[currentTCBIndex];
     for(uint32_t i = 0 ; i < allocatedTCBIndex ; i++){
-        KernelTcb_t * nextTCB = &TaskList[i];
-        if(nextTCB != currentTCB){
-            if(nextTCB->priority <= currentTCB->priority){
-                return nextTCB;
+        KernelTcb_t * tmpNextTCB = &TaskList[i];
+        if(tmpNextTCB != currentTCB){
+            if(tmpNextTCB->priority <= currentTCB->priority){
+                return tmpNextTCB;
             }
         }
     }

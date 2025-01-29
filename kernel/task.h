@@ -15,7 +15,7 @@ typedef struct KernelTaskContext_t
 
 typedef struct KernelTcb_t
 {
-    uint32_t stackPointer;
+    uint32_t* stackPointer;
     uint8_t* stackBase;
     uint8_t priority;
 } KernelTcb_t;
@@ -23,6 +23,7 @@ typedef struct KernelTcb_t
 typedef void (*KernelTaskFunc_t)(void);
 
 void Kernel_TaskInit(void);
-uint32_t Kernel_TaskCreate(KernelTaskFunc_t startFunction);
+uint32_t Kernel_TaskCreate(KernelTaskFunc_t startFunction, uint8_t priority);
+void Kernel_TaskScheduler(void);
 
 #endif
