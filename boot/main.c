@@ -7,6 +7,7 @@
 
 static void HwInit(void);
 static void PrintTest(void);
+static void GetTimerSysCtrl0(void);
 static void TimerTest(void);
 
 void main(void)
