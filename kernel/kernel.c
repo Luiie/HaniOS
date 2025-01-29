@@ -1,5 +1,6 @@
 #include "stdint.h"
 #include "standardIO.h"
+#include "userTask.h"
 #include "task.h"
 #include "kernel.h"
 
