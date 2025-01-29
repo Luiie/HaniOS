@@ -1,9 +1,7 @@
 #include "stdint.h"
 #include "ARMv7AR.h"
 #include "ARMswitch.h"
-#include "standardIO.h"
 #include "task.h"
-#include "kernel.h"
 
 static KernelTcb_t TaskList[MAX_TASK_NUM];
 static uint32_t allocatedTCBIndex;
@@ -56,34 +54,6 @@ void Kernel_TaskStart(void){
     nextTCB = &TaskList[currentTCBIndex];
 
     RestoreContext();
-};
-
-
-void dummyTask0(void){
-    uint32_t local = 0;
-
-    while(TRUE){
-        printingFormat("Dummy Task0, Stack Pointer=0x%h", &local);
-        Kernel_KernelYeild();
-    }
-};
-
-void dummyTask1(void){
-    uint32_t local = 0;
-
-    while(TRUE){
-        printingFormat("Dummy Task1, Stack Pointer=0x%h", &local);
-        Kernel_KernelYeild();
-    }
-};
-
-void dummyTask2(void){
-    uint32_t local = 0;
-
-    while(TRUE){
-        printingFormat("Dummy Task2, Stack Pointer=0x%h", &local);
-        Kernel_KernelYeild();
-    }
 };
 
 

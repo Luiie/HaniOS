@@ -27,8 +27,4 @@ uint32_t Kernel_TaskCreate(KernelTaskFunc_t startFunction, uint8_t priority);
 void Kernel_TaskScheduler(void);
 void Kernel_TaskStart(void);
 
-void dummyTask0(void);
-void dummyTask1(void);
-void dummyTask2(void);
-
 #endif
