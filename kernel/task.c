@@ -1,5 +1,6 @@
 #include "stdint.h"
 #include "ARMv7AR.h"
+#include "ARMswitch.h"
 #include "task.h"
 
 static KernelTcb_t TaskList[MAX_TASK_NUM];
