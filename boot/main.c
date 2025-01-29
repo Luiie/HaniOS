@@ -63,7 +63,7 @@ static void PrintTest(void){
 };
 
 static void TimerTest(void){
-    while(TRUE){
+    for(uint32_t i = 0; i < 4 ; i++){
         printingFormat("current count: %d\n", HAL_TimerGet1msCounter());
         delay(1000);
     };
