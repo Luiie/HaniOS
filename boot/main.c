@@ -4,6 +4,7 @@
 #include "HAL_Interrupt.h"
 #include "standardLib.h"
 #include "HAL_Timer.h"
+#include "kernel.h"
 
 static void HwInit(void);
 static void PrintTest(void);
@@ -32,6 +33,8 @@ void main(void)
     //Timer Test
     GetTimerSysCtrl0();
     TimerTest();
+
+    Kernel_KernelInit();
 
     // while loop
     while(TRUE);

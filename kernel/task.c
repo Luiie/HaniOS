@@ -1,7 +1,9 @@
 #include "stdint.h"
 #include "ARMv7AR.h"
 #include "ARMswitch.h"
+#include "standardIO.h"
 #include "task.h"
+#include "kernel.h"
 
 static KernelTcb_t TaskList[MAX_TASK_NUM];
 static uint32_t allocatedTCBIndex;
@@ -15,6 +17,7 @@ KernelTcb_t* nextTCB;
 
 void Kernel_TaskInit(void){
     allocatedTCBIndex = 0;
+    currentTCBIndex = 0;
 
     for(uint32_t i = 0 ; i < MAX_TASK_NUM ; i++){
         TaskList[i].stackBase = (uint8_t *)(TASK_STACK_START + (i * USR_TASK_STACK_SIZE));
@@ -47,6 +50,40 @@ void Kernel_TaskScheduler(void){
     nextTCB = Scheduler_RoundRobinAlgorithm();
 
     ContextSwitching();
+};
+
+void Kernel_TaskStart(void){
+    nextTCB = &TaskList[currentTCBIndex];
+
+    RestoreContext();
+};
+
+
+void dummyTask0(void){
+    uint32_t local = 0;
+
+    while(TRUE){
+        printingFormat("Dummy Task0, Stack Pointer=0x%h", &local);
+        Kernel_KernelYeild();
+    }
+};
+
+void dummyTask1(void){
+    uint32_t local = 0;
+
+    while(TRUE){
+        printingFormat("Dummy Task1, Stack Pointer=0x%h", &local);
+        Kernel_KernelYeild();
+    }
+};
+
+void dummyTask2(void){
+    uint32_t local = 0;
+
+    while(TRUE){
+        printingFormat("Dummy Task2, Stack Pointer=0x%h", &local);
+        Kernel_KernelYeild();
+    }
 };
 
 
