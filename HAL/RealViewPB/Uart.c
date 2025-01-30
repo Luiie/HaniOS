@@ -2,6 +2,7 @@
 #include "Uart.h"
 #include "HAL_Uart.h"
 #include "HAL_Interrupt.h"
+#include "kernel.h"
 
 //connect HW register struct to base address
     //PL011_t, UART of RealViewPB platform
@@ -50,4 +51,6 @@ uint8_t HAL_UartGetChar(void){
 static void InterruptHandler(void){
     uint8_t ch = HAL_UartGetChar();
     HAL_UartPutChar(ch);
+
+    Kernel_SendEvents(KernelEventFlag_UartIn);
 };

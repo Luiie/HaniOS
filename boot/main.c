@@ -5,6 +5,7 @@
 #include "standardLib.h"
 #include "HAL_Timer.h"
 #include "kernel.h"
+#include "event.h"
 
 static void HwInit(void);
 static void PrintTest(void);
