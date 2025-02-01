@@ -39,10 +39,10 @@ void Kernel_KernelInit(void){
 };
 
 void Kernel_SendEvents(uint32_t eventList){
+    KernelEventFlag_t sendingEvent = KernelEventFlag_Empty;
     for (uint32_t i = 0 ; i < MAX_EVENT_NUM ; i++){
         if ((eventList >> i) & 1){
-            KernelEventFlag_t sendingEvent = KernelEventFlag_Empty;
-            sendingEvent = (KernelEventFlag_t) SET_BIT(sendingEvent, i);
+            SET_BIT(sendingEvent, i);
             Kernel_EventFlagSet(sendingEvent);
         }
     }
@@ -50,13 +50,11 @@ void Kernel_SendEvents(uint32_t eventList){
 
 KernelEventFlag_t Kernel_WaitEvents(uint32_t eventList){
     KernelEventFlag_t waitingEvent = KernelEventFlag_Empty;
-
     for (uint32_t i = 0 ; i < MAX_EVENT_NUM ; i++){
         if ((eventList >> i) & 1){
-            waitingEvent = SET_BIT(waitingEvent, i);
-            Kernel_EventFlagSet(waitingEvent);
-            
+            SET_BIT(waitingEvent, i);
             if(Kernel_EventFlagCheck(waitingEvent)){
+                Kernel_EventFlagClear(waitingEvent);
                 return waitingEvent;
             }
         }
