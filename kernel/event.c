@@ -17,6 +17,7 @@ void Kernel_EventFlagClear(KernelEventFlag_t event){
 
 bool Kernel_EventFlagCheck(KernelEventFlag_t event){
     if(eventFlag & (uint32_t)event){
+        Kernel_EventFlagClear(event);
         return TRUE;
     }
     return FALSE;

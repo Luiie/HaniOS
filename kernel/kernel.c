@@ -49,12 +49,11 @@ void Kernel_SendEvents(uint32_t eventList){
 };
 
 KernelEventFlag_t Kernel_WaitEvents(uint32_t eventList){
-    KernelEventFlag_t waitingEvent = KernelEventFlag_Empty;
     for (uint32_t i = 0 ; i < MAX_EVENT_NUM ; i++){
+        KernelEventFlag_t waitingEvent = KernelEventFlag_Empty;
         if ((eventList >> i) & 1){
             SET_BIT(waitingEvent, i);
             if(Kernel_EventFlagCheck(waitingEvent)){
-                Kernel_EventFlagClear(waitingEvent);
                 return waitingEvent;
             }
         }

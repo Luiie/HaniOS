@@ -52,5 +52,8 @@ static void InterruptHandler(void){
     uint8_t ch = HAL_UartGetChar();
     HAL_UartPutChar(ch);
 
-    Kernel_SendEvents(KernelEventFlag_UartIn);
+    Kernel_SendEvents(KernelEventFlag_UartIn|KernelEventFlag_MtIn);
+    if(ch == 'x'){
+        Kernel_SendEvents(KernelEventFlag_MtOut);
+    }
 };

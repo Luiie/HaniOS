@@ -9,6 +9,21 @@ void dummyTask0(void){
     printingFormat("Dummy Task0, Stack Pointer=0x%h", &local);
     
     while(TRUE){
+        bool pendingEvent = TRUE;
+        while(pendingEvent){
+            KernelEventFlag_t handleEvent = Kernel_WaitEvents(KernelEventFlag_MtIn|KernelEventFlag_MtOut);
+            switch(handleEvent){
+                case KernelEventFlag_MtIn:
+                    printingString("MtIn Event sent from Task0\n");
+                    break;
+                case KernelEventFlag_MtOut:
+                    printingString("MtOut Event sent from Task0\n");
+                    break;
+                default:
+                    pendingEvent = FALSE;
+                    break;
+            }
+        }
         Kernel_KernelYeild();
     }
 };
@@ -23,7 +38,7 @@ void dummyTask1(void){
         switch(handleEvent){
             case KernelEventFlag_UartIn:
                 Kernel_SendEvents(KernelEventFlag_CmdIn);
-                printingString("Event sent from Task1\n");
+                printingString("CmdIn Event sent from Task1\n");
                 break;
         }
         Kernel_KernelYeild();
@@ -39,7 +54,7 @@ void dummyTask2(void){
         KernelEventFlag_t handleEvent = Kernel_WaitEvents(KernelEventFlag_CmdIn);
         switch(handleEvent){
             case KernelEventFlag_CmdIn:
-                printingString("Event got to Task2\n");
+                printingString("CmdIn Event got to Task2\n");
                 break;
         }
         Kernel_KernelYeild();
