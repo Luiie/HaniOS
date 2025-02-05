@@ -69,7 +69,7 @@ bool Kernel_SendMessage(KernelMessageQ_t QName, void* data, uint32_t count){
     for(uint32_t i = 0 ; i < count ; i++){
         if(!Kernel_MessageQEnqueue(QName, *tmpData)){
             for(uint32_t i = 0 ; i < count ; i++){
-                uint8_t rollback;
+                uint8_t* rollback;
                 Kernel_MessageQDequeue(QName, rollback);
             }
             return FALSE;
@@ -84,7 +84,7 @@ uint32_t Kernel_ReceiveMessage(KernelMessageQ_t QName, void* outData, uint32_t c
     uint8_t* tmpData = (uint8_t*) outData;
 
     for(uint32_t i = 0 ; i < count ; i++){
-        if(!Kernel_MessageQEnqueue(QName, tmpData)){
+        if(!Kernel_MessageQEnqueue(QName, *tmpData)){
             return i;
         }
         tmpData++;
