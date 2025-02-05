@@ -1,10 +1,12 @@
 #include "stdint.h"
+#include "stdbool.h"
 #include "standardIO.h"
 #include "memoryIO.h"
 #include "userTask.h"
 #include "task.h"
 #include "kernel.h"
 #include "event.h"
+#include "message.h"
 
 void Kernel_KernelStart(void){
     Kernel_TaskStart();
@@ -59,4 +61,34 @@ KernelEventFlag_t Kernel_WaitEvents(uint32_t eventList){
         }
     }
     return KernelEventFlag_Empty;
+};
+
+bool Kernel_SendMessage(KernelMessageQ_t QName, void* data, uint32_t count){
+    uint8_t* tmpData = (uint8_t*)data;
+
+    for(uint32_t i = 0 ; i < count ; i++){
+        if(!Kernel_MessageQEnqueue(QName, *tmpData)){
+            for(uint32_t i = 0 ; i < count ; i++){
+                uint8_t rollback;
+                Kernel_MessageQDequeue(QName, rollback);
+            }
+            return FALSE;
+        }
+        tmpData++;
+    }
+
+    return TRUE;
+};
+
+uint32_t Kernel_ReceiveMessage(KernelMessageQ_t QName, void* outData, uint32_t count){
+    uint8_t* tmpData = (uint8_t*) outData;
+
+    for(uint32_t i = 0 ; i < count ; i++){
+        if(!Kernel_MessageQEnqueue(QName, tmpData)){
+            return i;
+        }
+        tmpData++;
+    }
+
+    return count;
 };
