@@ -37,6 +37,16 @@ void Kernel_KernelInit(void){
         printingString("Task2 creation fail!\n");
     }
 
+    taskId = Kernel_TaskCreate(messageTask0, 0xFF);
+    if(taskId == NOT_ENOUGH_TASK_NUM){
+        printingString("MessageTask0 creation fail!\n");
+    }
+
+    taskId = Kernel_TaskCreate(messageTask1, 0xFF);
+    if(taskId == NOT_ENOUGH_TASK_NUM){
+        printingString("MessageTask1 creation fail!\n");
+    }
+
     Kernel_KernelStart();
 };
 
@@ -84,7 +94,7 @@ uint32_t Kernel_ReceiveMessage(KernelMessageQ_t QName, void* outData, uint32_t c
     uint8_t* tmpData = (uint8_t*) outData;
 
     for(uint32_t i = 0 ; i < count ; i++){
-        if(!Kernel_MessageQEnqueue(QName, *tmpData)){
+        if(!Kernel_MessageQDequeue(QName, tmpData)){
             return i;
         }
         tmpData++;

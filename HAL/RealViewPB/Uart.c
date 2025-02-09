@@ -3,6 +3,7 @@
 #include "HAL_Uart.h"
 #include "HAL_Interrupt.h"
 #include "kernel.h"
+#include "userTask.h"
 
 //connect HW register struct to base address
     //PL011_t, UART of RealViewPB platform
@@ -56,4 +57,8 @@ static void InterruptHandler(void){
     if(ch == 'x'){
         Kernel_SendEvents(KernelEventFlag_MtOut);
     }
+
+    Kernel_SendMessage(KernelMessageQ_Task0, &ch, 1);
+    Kernel_SendEvents(KernelEventFlag_MessageIn);
+
 };

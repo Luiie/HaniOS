@@ -30,7 +30,7 @@ bool Kernel_MessageQIsFull(KernelMessageQ_t QName){
         return FALSE;
     }
 
-    if(((MessageQ[QName].rear + 1) % MESSAGE_Q_SIZE_BYTE) >= MessageQ[QName].front){
+    if(((MessageQ[QName].rear + 1) % MESSAGE_Q_SIZE_BYTE) == MessageQ[QName].front){
         return TRUE;
     }
 
@@ -60,7 +60,7 @@ bool Kernel_MessageQDequeue(KernelMessageQ_t QName, uint8_t* outData){
         return FALSE;
     }
 
-    if(Kernel_MessageQIsFull(QName)){
+    if(Kernel_MessageQIsEmpty(QName)){
         return FALSE;
     }
 
